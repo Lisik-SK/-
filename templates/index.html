@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Список работ</h1>
+{% for item in jobs%}
+<div class="col-md6 border rounded">
+    <h2>Работа # {{ loop.index }}</h2>
+    <div>
+        {{item.job}}
+    </div>
+    {% if item.is_finished == True %}
+        {% set is_finished = 'Работа завершена' %}
+    {% else %}
+        {% set is_finished = 'Работа не закончена' %}
+    {% endif %}
+    <div>
+        Командир - {{item.user.name}}, Размер работы - {{item.work_size}}, Список работников - {{item.collaborators}}, {{ is_finished }}
+    </div>
+    {% if current_user.is_authenticated and current_user == item.user or current_user == captain %}
+{% endif %}
+</div>
+{% endfor %}
+{% endblock %}
